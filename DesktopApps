@@ -1,0 +1,40 @@
+Desktop Applications
+
+Warp Terminal
+    sudo apt-get install wget gpg
+    wget -qO- https://releases.warp.dev/linux/keys/warp.asc | gpg --dearmor > warpdotdev.gpg
+    sudo install -D -o root -g root -m 644 warpdotdev.gpg /etc/apt/keyrings/warpdotdev.gpg
+    sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/warpdotdev.gpg] https://releases.warp.dev/linux/deb stable main" > /etc/apt/sources.list.d/warpdotdev.list'
+    rm warpdotdev.gpg
+    sudo apt update && sudo apt install warp-terminal
+
+Add Nerd Fonts
+    wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip \
+    && cd ~/.local/share/fonts \
+    && unzip Hack.zip \
+    && rm Hack.zip \
+    && fc-cache -fv
+
+Add EZA (replacing ls)
+    Debian and Ubuntu
+
+    Eza is available from deb.gierens.de. The GPG public key is in this repo under deb.asc.
+
+    First make sure you have the gpg command, and otherwise install it via:
+
+    sudo apt update
+    sudo apt install -y gpg
+
+    Then install eza via:
+
+    sudo mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+    sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+    sudo apt update
+    sudo apt install -y eza
+
+Add Alias to .bashrc file
+    alias ls="eza --icons --group-directories-first"
+    alias ll="eza --icons --group-directories-first -l"
+    alias update="sudo apt update && sudo apt upgrade -y"
