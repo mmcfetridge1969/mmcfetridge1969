@@ -13,9 +13,7 @@ services:
       - URL=https://your-domain.com
     volumes:
       - uptime-kuma-data:/app/data
-    restart: always
-    healthcheck:
-      disable: true
+    restart: unless-stopped
 
 #    labels:    # Uncomment if you need this for traefik.
 #      - "traefik.enable=true"
@@ -24,8 +22,6 @@ services:
 #      - "traefik.http.routers.kuma.tls=true"
 #      - "traefik.http.routers.kuma.tls.certresolver=staging"
 #      - "traefik.http.services.gitlab.loadBalancer.server.port=3001"
-
-    restart: unless-stopped
 
     healthcheck:
       disable: true
