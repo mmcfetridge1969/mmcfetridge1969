@@ -13,12 +13,12 @@ services:
       # Mysql/Maria connection parameters:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npmuser"
-      DB_MYSQL_PASSWORD: "hFThAaIjIdKypvMkD62F"
+      DB_MYSQL_USER: "npmuser"                          # Create a username for the MYSQL_DATABASE
+      DB_MYSQL_PASSWORD: "hFThAaIjIdKypvMkD62F"         # Create a strong password for this username
       DB_MYSQL_NAME: "npm1"
     volumes:
-      - /home/miker/docker/npm/data:/data
-      - /home/miker/docker/npm/letsencrypt:/etc/letsencrypt
+      - ~/docker/npm/data:/data
+      - ~/docker/npm/letsencrypt:/etc/letsencrypt
     depends_on:
       - db
     networks:
@@ -29,13 +29,13 @@ services:
     container_name: npm-db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'hFThAaIjIdKypvMkD62F'
+      MYSQL_ROOT_PASSWORD: 'hFThAaIjIdKypvMkD62F'       # Create a VERY strong password for the root user.
       MYSQL_DATABASE: 'npm1'
-      MYSQL_USER: 'npmuser'
-      MYSQL_PASSWORD: 'hFThAaIjIdKypvMkD62F'
+      MYSQL_USER: 'npmuser'                             # Enter in the user name that you have above
+      MYSQL_PASSWORD: 'hFThAaIjIdKypvMkD62F'            # Enter in the password you created above for the user
       MARIADB_AUTO_UPGRADE: '1'
     volumes:
-      - /home/miker/docker/npm/mysql:/var/lib/mysql
+      - ~/docker/npm/mysql:/var/lib/mysql
     networks:
       - proxy
 

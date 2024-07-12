@@ -8,10 +8,10 @@ services:
       - DB_TYPE=sqlite
       - DB_STORAGE=/app/data/uptime-kuma.db
       - SOFTWARE_VERSION_TAG=latest
-      - URL=https://kuma.mikeandrebel.com
+      - URL=https://kuma.yourdomain.com         # Enter in your domain information
 
       volumes:
-      - /home/miker/docker/kuma/data:/app/data
+      - ~/docker/kuma/data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
 
 #    labels:    # Uncomment if you need this for traefik.
@@ -22,7 +22,7 @@ services:
 #      - "traefik.http.routers.kuma.tls.certresolver=staging"
 #      - "traefik.http.services.gitlab.loadBalancer.server.port=3001"
 
-    restart: always
+    restart: unless-stopped
 
     healthcheck:
       disable: true
