@@ -1,18 +1,21 @@
 version: '3'
+
 services:
   uptime-kuma:
     container_name: uptime-kuma
     image: elestio/uptime-kuma
-
+    ports:
+      - "3001:3001"
     environment:
       - DB_TYPE=sqlite
       - DB_STORAGE=/app/data/uptime-kuma.db
       - SOFTWARE_VERSION_TAG=latest
-      - URL=https://kuma.yourdomain.com         # Enter in your domain information
-
-      volumes:
-      - ~/docker/kuma/data:/app/data
-      - /var/run/docker.sock:/var/run/docker.sock
+      - URL=https://your-domain.com
+    volumes:
+      - uptime-kuma-data:/app/data
+    restart: always
+    healthcheck:
+      disable: true
 
 #    labels:    # Uncomment if you need this for traefik.
 #      - "traefik.enable=true"
@@ -28,6 +31,8 @@ services:
       disable: true
     networks:
       - proxy
+volumes:
+  uptime-kuma-data:
 
 networks:
   proxy:

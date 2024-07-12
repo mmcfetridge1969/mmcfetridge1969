@@ -75,7 +75,7 @@ install_Watchtower() {
 install_dashy() {
     echo "Installing Dashy..."
     mkdir ~/docker/dashy
-    mkdir dashy/config
+    mkdir ~/dashy/config
     cd ~/docker/dashy
     sudo git clone https://github.com/walkxcode/dashboard-icons.git
     curl https://raw.githubusercontent.com/mmcfetridge1969/mmcfetridge1969/master/dashy-docker-compose.yml -o docker-compose.yml
