@@ -38,7 +38,9 @@ install_Docker-CE() {
 install_Docker-compose() {
     echo "Installing Docker-compose..."
     sudo apt-get install docker-compose-plugin -y
+    exit
     sudo usermod -aG docker "${USER}"
+    echo "you must log out of you session and log back in"
 }
 
 # Function to install NginX-Proxy-Manager
@@ -68,7 +70,7 @@ install_Portainer-CE() {
 # Function to install Watchtower
 install_Watchtower() {
     echo "Installing Watchtower..."
-    docker run -d --name watchtower --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock -e WATCHTOWER_SCHEDULE="0 0 0 */1 * *" containrrr/watchtower
+    sudo docker run -d --name watchtower --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock -e WATCHTOWER_SCHEDULE="0 0 0 */1 * *" containrrr/watchtower
 }
 
 # Function to install Portainer-CE
