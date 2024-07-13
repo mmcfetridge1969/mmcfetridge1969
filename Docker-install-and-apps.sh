@@ -46,12 +46,12 @@ install_Docker-compose() {
 # Function to install NginX-Proxy-Manager
 install_NginX-Proxy-Manager() {
     echo "Installing NginX-Proxy-Manager..."
-    mkdir ~/docker
-    mkdir ~/docker/npm
-    mkdir ~/docker/npm/data
-    mkdir ~/docker/npm/letsencrypt
-    mkdir ~/docker/npm/mysql
-    cd ~/docker/npm
+    mkdir ./docker
+    mkdir ./docker/npm
+    mkdir ./docker/npm/data
+    mkdir ./docker/npm/letsencrypt
+    mkdir ./docker/npm/mysql
+    cd ./docker/npm
     curl https://raw.githubusercontent.com/mmcfetridge1969/mmcfetridge1969/master/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml
     sudo docker network create proxy
     sudo docker compose up -d
@@ -60,8 +60,8 @@ install_NginX-Proxy-Manager() {
 # Function to install Portainer-CE
 install_Portainer-CE() {
     echo "Installing Portainer..."
-    mkdir ~/docker/portainer
-    cd ~/docker/portainer
+    mkdir ./docker/portainer
+    cd ./docker/portainer
     sudo docker volume create portainer_data
     curl https://raw.githubusercontent.com/mmcfetridge1969/mmcfetridge1969/master/portainer-docker-compose.yml -o docker-compose.yml
     sudo docker compose up -d
@@ -76,9 +76,9 @@ install_Watchtower() {
 # Function to install Portainer-CE
 install_dashy() {
     echo "Installing Dashy..."
-    mkdir ~/docker/dashy
-    mkdir ~/dashy/config
-    cd ~/docker/dashy
+    mkdir ./docker/dashy
+    mkdir ./dashy/config
+    cd ./docker/dashy
     sudo git clone https://github.com/walkxcode/dashboard-icons.git
     curl https://raw.githubusercontent.com/mmcfetridge1969/mmcfetridge1969/master/dashy-docker-compose.yml -o docker-compose.yml
     sudo docker compose up -d
@@ -87,9 +87,9 @@ install_dashy() {
 # Function to install Portainer-CE
 install_kuma() {
     echo "Installing Kuma Uptime..."
-    mkdir ~/docker/kuma
-    mkdir ~/docker/kuma/data
-    cd ~/docker/kuma
+    mkdir ./docker/kuma
+    mkdir ./docker/kuma/data
+    cd ./docker/kuma
     curl https://raw.githubusercontent.com/mmcfetridge1969/mmcfetridge1969/master/kuma-docker-compose.yml -o docker-compose.yml
     sudo docker compose up -d
 }

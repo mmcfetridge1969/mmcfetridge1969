@@ -3,16 +3,26 @@ version: '3'
 services:
   uptime-kuma:
     container_name: uptime-kuma
+
+    # Pull latest image
     image: elestio/uptime-kuma
+
+    # Set port that web service will be served on.
     ports:
       - "3001:3001"
+
+    # Set any environmental variables
     environment:
       - DB_TYPE=sqlite
       - DB_STORAGE=/app/data/uptime-kuma.db
       - SOFTWARE_VERSION_TAG=latest
       - URL=https://your-domain.com
+
+    # Mapping data to the volume created for this service
     volumes:
       - uptime-kuma-data:/app/data
+
+    # Sets the service to restart always unless it is stopped manually.
     restart: unless-stopped
 
 #    labels:    # Uncomment if you need this for traefik.
@@ -23,13 +33,17 @@ services:
 #      - "traefik.http.routers.kuma.tls.certresolver=staging"
 #      - "traefik.http.services.gitlab.loadBalancer.server.port=3001"
 
+# Enabled Health check on this service
     healthcheck:
       disable: true
     networks:
       - proxy
-volumes:
-  uptime-kuma-data:
 
+# Persistent volume which are stored at "/var/lib/docker/volumes"
+volumes:
+  uptime-kuma-data:             # stored on the host system at "/var/lib/docker/volumes"
+
+# Service will be place in the proxy network for NPM security
 networks:
   proxy:
     external: true

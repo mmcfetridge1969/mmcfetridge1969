@@ -13,7 +13,7 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "~/docker/portainer/data:/data"
+      - "./docker/portainer/data:/data"
 
 #    labels:        # Uncomment if you use traefik.
 #      - "traefik.enable=true"

@@ -10,7 +10,7 @@ services:
   dashy:
     container_name: Dashy
 
-    # Pull latest image from DockerHub
+    # Pull latest image
     image: lissy93/dashy
 
     # To build from source, replace 'image: lissy93/dashy' with 'build: .'
@@ -19,10 +19,10 @@ services:
     # You can also use an image with a different tag, or pull from a different registry, e.g:
     # image: ghcr.io/lissy93/dashy or image: lissy93/dashy:3.0.0
 
-    # Pass in your config file below, by specifying the path on your host machine
+    # Mapping data to the volume created for this service
     volumes:
-      - ~/docker/dashy/config:/app/user-data
-      - ~/docker/dashy/icons:/app/user-data/item-icons/
+      - dashy-data/config:/app/user-data
+      - dashy-data/icons:/app/user-data/item-icons/
 
     # Set port that web service will be served on. Keep container port as 8080
     ports:
@@ -35,7 +35,7 @@ services:
       - UID=1000            # Update to match your UID
       - GID=1000            # Update to match your GID.
 
-    # Specify restart policy
+    # Sets the service to restart always unless it is stopped manually.
     restart: unless-stopped
 
     # Configure healthchecks
@@ -49,6 +49,11 @@ services:
     networks:
       - proxy
 
+# Persistent volume which are stored at "/var/lib/docker/volumes"
+volumes:
+  dashy-data:
+
+# Service will be place in the proxy network for NPM security
 networks:
   proxy:
     external: true

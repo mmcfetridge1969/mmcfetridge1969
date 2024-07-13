@@ -1,14 +1,28 @@
 version: '3.8'
 services:
+
+# Persistent volume which are stored at "/var/lib/docker/volumes"
+volumes:
+  npm-data:
+
   app:
+    # Pull latest image
     image: 'jc21/nginx-proxy-manager:latest'
+
+    # set the container name within docker
     container_name: npm-server
+
+    # Sets the service to restart always unless it is stopped manually.
     restart: unless-stopped
+
+    # Set port that web service will be served on
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
       - '443:443' # Public HTTPS Port
       - '81:81' # Admin Web Port
+
+    # Set any environmental variables
     environment:
       # Mysql/Maria connection parameters:
       DB_MYSQL_HOST: "db"
@@ -16,29 +30,46 @@ services:
       DB_MYSQL_USER: "npmuser"                          # Create a username for the MYSQL_DATABASE
       DB_MYSQL_PASSWORD: "hFThAaIjIdKypvMkD62F"         # Create a strong password for this username
       DB_MYSQL_NAME: "npm1"
+
+    # Mapping data to the volume created for this service
     volumes:
-      - ~/docker/npm/data:/data
-      - ~/docker/npm/letsencrypt:/etc/letsencrypt
+      - npm-data/data:/data
+      - npm-data/letsencrypt:/etc/letsencrypt
+
+    # Requirement needed before this service will start.
     depends_on:
       - db
+    # Network to join in docker which is named below
     networks:
       - proxy
 
   db:
+    # Pull latest image
     image: 'jc21/mariadb-aria:latest'
+
+    # set the container name within docker
     container_name: npm-db
+
+    # Sets the service to restart always unless it is stopped manually.
     restart: unless-stopped
+
+    # Set any environmental variables
     environment:
       MYSQL_ROOT_PASSWORD: 'hFThAaIjIdKypvMkD62F'       # Create a VERY strong password for the root user.
       MYSQL_DATABASE: 'npm1'
       MYSQL_USER: 'npmuser'                             # Enter in the user name that you have above
       MYSQL_PASSWORD: 'hFThAaIjIdKypvMkD62F'            # Enter in the password you created above for the user
       MARIADB_AUTO_UPGRADE: '1'
+
+    # Mapping data to the volume created for this service
     volumes:
-      - ~/docker/npm/mysql:/var/lib/mysql
+      - npm-data/mysql:/var/lib/mysql
+
+    # Network to join in docker which is named below
     networks:
       - proxy
 
+# create PROXY network for NPM security. This will allow NPM to see and talk to all services and also be mapped to the internal docker IP address (https://172.0.0.10:3001). Otherwise you will need to map with the public IP which will expose the service by the IP address:port and provide away around the ssl.
 networks:
   proxy:
     external: true
